@@ -116,6 +116,52 @@ export function categorizeProduct(listProduct: ProductProps[]) {
 }
 
 //-------------------------------------------------------------------------------------
+const productCategory = [
+  { value: 1, label: 'Rau Củ' },
+  { value: 2, label: 'Thịt, Cá, Trứng' },
+  { value: 3, label: 'Trái Cây' },
+];
+
+export const calculateCategoryConsumption = (orders: OrderProps[]) => {
+  // Khai báo categoryConsumption với kiểu key là string và value là number
+  const categoryConsumption: { [key: string]: number } = {};
+
+  // Tính tổng số lượng tiêu thụ cho mỗi loại sản phẩm
+  orders.forEach((order) => {
+    order.item.forEach((product) => {
+      // Tìm nhãn của loại sản phẩm tương ứng trong productCategory
+      const categoryLabel = productCategory.find(
+        (category) => category.value === Number(product.loai)
+      )?.label;
+
+      if (categoryLabel) {
+        const quantity = Number(product.soluong);
+        if (categoryConsumption[categoryLabel]) {
+          categoryConsumption[categoryLabel] += quantity;
+        } else {
+          categoryConsumption[categoryLabel] = quantity;
+        }
+      }
+    });
+  });
+
+  // Đảm bảo tất cả các loại sản phẩm đều xuất hiện, kể cả những loại không có trong đơn hàng
+  productCategory.forEach((category) => {
+    if (!categoryConsumption[category.label]) {
+      categoryConsumption[category.label] = 0;
+    }
+  });
+
+  // Tạo dữ liệu cho biểu đồ từ categoryConsumption
+  const categoryData = Object.keys(categoryConsumption).map((loai) => ({
+    label: loai,
+    value: categoryConsumption[loai],
+  }));
+
+  return categoryData;
+};
+
+//-------------------------------------------------------------------------------------
 export const processOrderData = (filterYear: string, orders: OrderProps[]) => {
   const currentMonth = new Date().getMonth();
   const currentYear = new Date().getFullYear();

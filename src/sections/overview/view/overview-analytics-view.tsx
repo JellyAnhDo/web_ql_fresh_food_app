@@ -21,6 +21,7 @@ import {
   calculateSaleMetrics,
   categorizeProduct,
   processOrderData,
+  calculateCategoryConsumption,
 } from '../utils';
 
 // ----------------------------------------------------------------------
@@ -34,10 +35,13 @@ export function OverviewAnalyticsView() {
   const [listUser, setListUser] = useState<UserAnalyticsProps[]>([]);
   const [listOrder, setListOrder] = useState<OrderProps[]>([]);
   const [categoryData, setCategoryData] = useState<{ label: string; value: number }[]>([]);
+  const [categoryData2, setCategoryData2] = useState<{ label: string; value: number }[]>([]);
+
   const [chartData, setChartData] = useState<{
     categories: string[];
     series: { name: string; data: number[] }[];
   }>({ categories: [], series: [] });
+  const [filterYear, setFilterYear] = useState('2024');
 
   const fetchApi = async () => {
     const resultListProduct = await productService.getProduct();
@@ -89,14 +93,15 @@ export function OverviewAnalyticsView() {
     setCategoryData(categorizedData);
   }, [listProduct]);
 
-  const [filterYear, setFilterYear] = useState('2024');
+  useEffect(() => {
+    const categorizedData2 = calculateCategoryConsumption(listOrder);
+    setCategoryData2(categorizedData2);
+  }, [listOrder]);
 
   useEffect(() => {
     const processedData = processOrderData(filterYear, listOrder);
     setChartData(processedData);
   }, [filterYear, listOrder]);
-
- 
 
   return (
     <DashboardContent maxWidth="xl">
@@ -163,6 +168,15 @@ export function OverviewAnalyticsView() {
             subheader="Tổng doanh thu từng loại sản phẩm theo tháng"
             chart={chartData}
             onFilterYear={(year) => setFilterYear(year)}
+          />
+        </Grid>
+
+        <Grid xs={12} md={6} lg={4}>
+          <AnalyticsCategory
+            title="Thống kê lượng tiêu thụ từng loại mặt hàng"
+            chart={{
+              series: categoryData2,
+            }}
           />
         </Grid>
 

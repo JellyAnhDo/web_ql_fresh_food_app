@@ -84,27 +84,25 @@ export function OrderTableToolbar({
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
+        <Tooltip title="Xóa">
           <IconButton>
             <Iconify icon="solar:trash-bin-trash-bold" />
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <ProductFilters
-            canReset={canReset}
-            filters={filters}
-            onSetFilters={handleSetFilters}
-            openFilter={openFilter}
-            onOpenFilter={handleOpenFilter}
-            onCloseFilter={handleCloseFilter}
-            onResetFilter={() => onSetFilters(defaultFilters)}
-            options={{
-              orderStatus: ORDER_STATUS_OPTIONS,
-            }}
-            isStatistic={false}
-          />
-        </Tooltip>
+        <ProductFilters
+          canReset={canReset}
+          filters={filters}
+          onSetFilters={handleSetFilters}
+          openFilter={openFilter}
+          onOpenFilter={handleOpenFilter}
+          onCloseFilter={handleCloseFilter}
+          onResetFilter={() => onSetFilters(defaultFilters)}
+          options={{
+            orderStatus: ORDER_STATUS_OPTIONS,
+          }}
+          isStatistic={false}
+        />
       )}
     </Toolbar>
   );

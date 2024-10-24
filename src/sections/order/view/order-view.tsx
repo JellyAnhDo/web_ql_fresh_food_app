@@ -111,6 +111,8 @@ export function OrderView() {
                   { id: 'ngaydat', label: 'Thời gian đặt hàng', align: 'center' },
                   { id: 'diachi', label: 'Địa chỉ giao hàng' },
                   { id: 'tongtien', label: 'Tổng tiền', align: 'center' },
+                  { id: 'phuongthucthanhtoan', label: 'Phương thức thanh toán', align: 'center' },
+
                   {
                     id: 'trangthai',
                     label: 'Trạng thái đơn hàng',

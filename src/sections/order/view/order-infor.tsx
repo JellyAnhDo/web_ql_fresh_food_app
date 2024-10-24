@@ -64,8 +64,6 @@ function OrderInfor() {
     [handleUpdateOrderStatus, id]
   );
 
-  console.log(order);
-
   return (
     <DashboardContent>
       <Box display="flex" alignItems="center" mb={5}>
@@ -244,25 +242,23 @@ function OrderInfor() {
               ))}
           </Box>
 
-          <Typography
+          <Box
             sx={{
               mt: 3,
-              textAlign: 'end',
               display: 'flex',
               justifyContent: 'flex-end',
               alignItems: 'center',
             }}
           >
-            <Typography
-              variant="h6"
-              sx={{
-                mr: 2,
-              }}
-            >
-              Thành tiền:
-            </Typography>
-            {fCurrency(order?.tongtien)}
-          </Typography>
+            <Box mr={2}>
+              <Typography variant="h6">Thành tiền:</Typography>
+              <Typography variant="h6">Phương thức thanh toán:</Typography>
+            </Box>
+            <Box>
+              <Typography sx={{ height: 28 }}>{fCurrency(order?.tongtien)}</Typography>
+              <Typography sx={{ height: 28 }}>{order?.phuongthucthanhtoan}</Typography>
+            </Box>
+          </Box>
 
           <Button variant="contained" sx={{ marginLeft: '12px' }} onClick={() => router.back()}>
             Trở lại

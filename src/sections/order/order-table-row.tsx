@@ -39,6 +39,7 @@ export type OrderProps = {
   tongtien: number;
   ngaydat: string;
   momo: string;
+  phuongthucthanhtoan: string;
 };
 
 type OrderTableRowProps = {
@@ -103,6 +104,7 @@ export function OrderTableRow({
         <TableCell align="center">{row.ngaydat}</TableCell>
         <TableCell>{row.diachi}</TableCell>
         <TableCell align="center">{fCurrency(row.tongtien)}</TableCell>
+        <TableCell align="center">{row.phuongthucthanhtoan}</TableCell>
         <TableCell
           align="center"
           sx={{
