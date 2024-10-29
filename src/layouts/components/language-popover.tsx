@@ -1,12 +1,13 @@
 import type { IconButtonProps } from '@mui/material/IconButton';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useContext, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Popover from '@mui/material/Popover';
 import MenuList from '@mui/material/MenuList';
 import IconButton from '@mui/material/IconButton';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
+import LangContext from 'src/store/langContext';
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +20,8 @@ export type LanguagePopoverProps = IconButtonProps & {
 };
 
 export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProps) {
-  const [locale, setLocale] = useState<string>(data[0].value);
+  const langCtx = useContext(LangContext);
+  const [locale, setLocale] = useState<string>(langCtx.lang || '');
 
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
 
@@ -34,9 +36,10 @@ export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProp
   const handleChangeLang = useCallback(
     (newLang: string) => {
       setLocale(newLang);
+      langCtx.toggleLanguage(newLang);
       handleClosePopover();
     },
-    [handleClosePopover]
+    [handleClosePopover, langCtx]
   );
 
   const currentLang = data.find((lang) => lang.value === locale);

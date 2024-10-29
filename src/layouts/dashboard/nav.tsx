@@ -1,6 +1,7 @@
 import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
 
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
@@ -22,6 +23,7 @@ export type NavContentProps = {
   data: {
     path: string;
     title: string;
+    section: string;
     icon: React.ReactNode;
     info?: React.ReactNode;
   }[];
@@ -107,6 +109,7 @@ export function NavMobile({
 
 export function NavContent({ data, slots, sx }: NavContentProps) {
   const pathname = usePathname();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -151,7 +154,7 @@ export function NavContent({ data, slots, sx }: NavContentProps) {
                     </Box>
 
                     <Box component="span" flexGrow={1}>
-                      {item.title}
+                      {t(item.section)}
                     </Box>
 
                     {item.info && item.info}

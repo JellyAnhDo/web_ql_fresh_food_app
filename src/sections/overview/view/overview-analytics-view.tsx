@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 
@@ -11,6 +12,7 @@ import * as orderService from 'src/services/orderService';
 import { ProductProps } from 'src/sections/product/product-table-row';
 import { UserProps } from 'src/sections/user/user-table-row';
 import { OrderProps } from 'src/sections/order/order-table-row';
+import LangContext from 'src/store/langContext';
 
 import { AnalyticsCategory } from '../analytics-category';
 import { AnalyticsOrderTimeline } from '../analytics-order-timeline';
@@ -31,6 +33,8 @@ type UserAnalyticsProps = UserProps & {
 
 export function OverviewAnalyticsView() {
   const router = useRouter();
+  const { t } = useTranslation();
+
   const [listProduct, setListProduct] = useState<ProductProps[]>([]);
   const [listUser, setListUser] = useState<UserAnalyticsProps[]>([]);
   const [listOrder, setListOrder] = useState<OrderProps[]>([]);
@@ -106,13 +110,13 @@ export function OverviewAnalyticsView() {
   return (
     <DashboardContent maxWidth="xl">
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
-        Chào mừng bạn trở lại 👋
+        {t('welcome')} 👋
       </Typography>
 
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Sản phẩm"
+            title={t('products')}
             percent={percentChangeProduct}
             total={totalProduct}
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-bag.svg" />}
@@ -122,7 +126,7 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Sản phẩm giảm giá"
+            title={t('discountProducts')}
             percent={percentChangeProductSale}
             total={totalProductSale}
             color="error"
@@ -133,7 +137,7 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Người dùng"
+            title={t('users')}
             percent={percentChangeUser}
             total={totalUser}
             color="secondary"
@@ -144,7 +148,7 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Lượng mua"
+            title={t('purchaseAmount')}
             percent={percentChangeOrder}
             total={totalOrder}
             color="warning"
@@ -155,7 +159,7 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} md={6} lg={4}>
           <AnalyticsCategory
-            title="Thống kê mặt hàng"
+            title={t('categories')}
             chart={{
               series: categoryData,
             }}

@@ -10,16 +10,19 @@ const icon = (name: string) => (
 export const navData = [
   {
     title: 'Tổng quan',
+    section: 'dashboard',
     path: '/',
     icon: icon('ic-analytics'),
   },
   {
     title: 'Người dùng',
+    section: 'users',
     path: '/user',
     icon: icon('ic-user'),
   },
   {
     title: 'Sản phẩm',
+    section: 'products',
     path: '/products',
     icon: icon('ic-cart'),
     // info: (
@@ -30,11 +33,13 @@ export const navData = [
   },
   {
     title: 'Đơn hàng',
+    section: 'orders',
     path: '/order',
     icon: icon('ic-blog'),
   },
   {
     title: 'Thống kê',
+    section: 'statistic',
     path: '/statistic',
     icon: icon('ic-analytics'),
   },
